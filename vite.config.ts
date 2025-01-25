@@ -15,8 +15,8 @@ export default defineConfig({
     outDir: "dist",
     lib: {
       entry: resolve(__dirname, "src/main.ts"),
-      name: "toast-library",
-      fileName: "toast-library",
+      name: "toastify-library",
+      fileName: "toastify-library",
       formats: ["es"],
     },
     rollupOptions: {
