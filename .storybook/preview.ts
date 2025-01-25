@@ -1,4 +1,5 @@
 import type { Preview } from "@storybook/react";
+import { WithThemeProvider } from "./withThemeProvider";
 
 const preview: Preview = {
   parameters: {
@@ -9,6 +10,7 @@ const preview: Preview = {
       },
     },
   },
+  decorators: [WithThemeProvider],
 };
 
 export default preview;
