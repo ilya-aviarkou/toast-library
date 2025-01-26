@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, memo, useState } from "react";
 import { ToastProps } from "./types";
 import {
   CloseIcon,
@@ -14,18 +14,35 @@ const Toast: FC<ToastProps> = ({
   type,
   text,
   backgroundColor,
+  onClose = () => {},
+  duration = 3000,
   animation = "smooth",
   position = "bottom",
 }) => {
+  const [isClosing, setIsCLosing] = useState(false);
+
+  const handleStartTransition = () => {
+    setIsCLosing(true);
+  };
+
+  const handleStopTransition = () => {
+    if (isClosing) {
+      onClose();
+    }
+  };
+
   return (
     <Container
       type={type}
       backgroundColor={backgroundColor}
       animation={animation}
       position={position}
+      duration={duration}
+      onAnimationEnd={handleStopTransition}
+      className={isClosing ? "closing" : ""}
     >
       <CloseIconContainer>
-        <CloseIcon src={closeIcon} />
+        <CloseIcon src={closeIcon} onClick={handleStartTransition} />
       </CloseIconContainer>
       <Output>
         <OutputIcon src={toastIcons[type]} />
@@ -35,4 +52,4 @@ const Toast: FC<ToastProps> = ({
   );
 };
 
-export default Toast;
+export default memo(Toast);

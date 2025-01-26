@@ -3,6 +3,7 @@ import { ThemeProvider } from "styled-components";
 import { theme } from "../src/theme";
 import { StoryContext, StoryFn } from "@storybook/react";
 import { GlobalStyle } from "../src/globalStyles";
+import ToastProvider from "../src/context/ToastProvider";
 
 export const WithThemeProvider = (Story: StoryFn, context: StoryContext) => {
   return (
@@ -14,8 +15,10 @@ export const WithThemeProvider = (Story: StoryFn, context: StoryContext) => {
         />
       </head>
       <ThemeProvider theme={theme}>
-        <GlobalStyle />
-        <Story {...context} />
+        <ToastProvider>
+          <GlobalStyle />
+          <Story {...context} />
+        </ToastProvider>
       </ThemeProvider>
     </>
   );

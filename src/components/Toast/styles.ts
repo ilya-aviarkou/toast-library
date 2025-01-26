@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import {
   closeIconHeight,
   closeIconWidth,
@@ -8,20 +8,33 @@ import {
   width,
 } from "./config";
 import { ToastProps } from "./types";
+import {
+  fadeIn,
+  fadeInBounce,
+  fadeInBounceClose,
+  fadeInClose,
+} from "./animations";
 
 type ContainerProps = Pick<
   ToastProps,
-  "type" | "backgroundColor" | "animation" | "position"
+  "type" | "backgroundColor" | "animation" | "position" | "duration"
 >;
 
 export const Container = styled("div")<ContainerProps>(
-  ({ theme, type, backgroundColor }) => ({
-    width: width,
-    height: height,
-    backgroundColor: backgroundColor ?? theme.colors[type],
-    padding: theme.spaces.sm,
-    borderRadius: 10,
-  })
+  ({ theme, type, backgroundColor, animation }) => css`
+    width: ${width}px;
+    height: ${height}px;
+    background-color: ${backgroundColor ?? theme.colors[type]};
+    padding: ${theme.spaces.sm}px;
+    border-radius: 10px;
+    animation: ${animation === "bounce" ? fadeInBounce : fadeIn} 0.5s
+      ease-in-out;
+
+    &.closing {
+      animation: ${animation === "bounce" ? fadeInBounceClose : fadeInClose}
+        0.5s ease-in-out forwards;
+    }
+  `
 );
 
 export const CloseIconContainer = styled("div")({
